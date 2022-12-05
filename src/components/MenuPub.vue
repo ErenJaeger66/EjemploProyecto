@@ -14,7 +14,7 @@
             <!-- <b-nav-item>'s with child routes. Note the trailing slash on the first <b-nav-item> -->
             <b-nav-item to="/usr" exact exact-active-class="active">Inicio</b-nav-item>
             <b-nav-item to="/usr/gestion" exact exact-active-class="active">Usuario</b-nav-item>            
-            <b-nav-item to="/gesconvocatorias" exact exact-active-class="active">Gestion Convocatorias</b-nav-item>
+            <b-nav-item to="/conv/gestion" exact exact-active-class="active">Gestion Convocatorias</b-nav-item>
             <b-nav-item to="/geshabilitados" exact exact-active-class="active">Gestion Habilitados</b-nav-item>
             <b-nav-item v-on:click="salir()">Salir</b-nav-item>
         </b-nav>

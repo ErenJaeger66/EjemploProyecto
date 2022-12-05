@@ -1,33 +1,32 @@
 <template>
     <div class="container">
-        <h1>Gestión de Usuarios</h1>
+        <h1>Gestión de Convocatorias</h1>
         <b-button variant="primary" @click="nuevo()"><b-icon-plus-circle></b-icon-plus-circle></b-button>
 
         <!--Para ventana modal-->
-        <b-modal id="modal-1" title="Agregar Usuarios" no-close-on-esc no-close-on-backdrop>
+        <b-modal id="modal-2" title="Agregar Convocatoria" no-close-on-esc no-close-on-backdrop>
             <b-container fluid>
                 <b-form @submit="guardar()" @reset="cerrar()">
-                    <b-form-group id="input-group-0" label="Nombre Usuario:" label-for="input-0">
-                        <b-form-input id="input-0" v-model="form.nombre" type="text"
-                        placeholder="Ingrese Nombre del Usuario" required>                            
+                    <b-form-group id="input-group-0" label="Número de Convocatoria:" label-for="input-0">
+                        <b-form-input id="input-0" v-model="form.numero" type="text"
+                        placeholder="Ingrese Número de Convocatoria" required>                            
                         </b-form-input>
                     </b-form-group>
 
-                    <b-form-group id="input-group-1" label="Ususario:" label-for="input-1">
-                        <b-form-input id="input-1" v-model="form.usuario" type="text"
-                        placeholder="Ingrese Usuario" required>                            
+                    <b-form-group id="input-group-1" label="Semestre:" label-for="input-1">
+                        <b-form-input id="input-1" v-model="form.semestre" type="text"
+                        placeholder="Ingrese Semestre" required>                            
                         </b-form-input>
                     </b-form-group>
                     
-                    <b-form-group id="input-group-2" label="Contraseña:" label-for="input-2">
-                        <b-form-input id="input-2" v-model="form.contraseña" type="text"
-                        placeholder="Ingrese Contraseña" required>                            
+                    <b-form-group id="input-group-2" label="Fecha de Publicación:" label-for="input-2">
+                        <b-form-input id="input-2" v-model="form.fecpublicacion" type="date" required>                            
                         </b-form-input>
                     </b-form-group>
 
-                    <b-form-group id="input-group-3" label="Tipo:" label-for="input-3">
-                        <b-form-select id="input-3" v-model="form.tipo" :options="tipos" required>
-                        </b-form-select>
+                    <b-form-group id="input-group-3" label="Fecha Limite:" label-for="input-3">
+                        <b-form-input id="input-3" v-model="form.feclimite" type="date" required>
+                        </b-form-input>
                     </b-form-group>
                 </b-form>                
             </b-container>
@@ -49,27 +48,23 @@
 
 <script>
 export default {
-    name: "GestionUsuario",
+    name: "GestionConvocatoria",
     data() {
       return {
         usuarios: [],
         campos:[
-            {key:"usuario", label:"Usuario"},
-            {key:"contraseña", label:"Contraseña"},
-            {key:"nombre", label:"Nombre"},
-            {key:"tipo", label:"Tipo"},
+            {key:"numero", label:"Numero de Convocatoria"},
+            {key:"semestre", label:"Semestre"},
+            {key:"fecpublicacion", label:"Fecha de Publicación"},
+            {key:"feclimite", label:"Fecha Limite"},
             {key:"actions", label:"Opciones"}
-        ],
-        tipos:[
-            {text:"Estudiante", value:0},
-            {text:"Administrador", value:1},
-        ],
+        ],        
         form:{
             id:0,
-            nombre:"",
-            usuario:"",
-            contraseña:"",
-            tipo:0
+            numero:"",
+            semestre:"",
+            fecpublicacion:"",
+            feclimite:""
         },
         accion:0
       }
@@ -78,29 +73,29 @@ export default {
         modificar(item){
             this.form=item;
             this.accion=1;
-            this.$root.$emit("bv::show::modal","modal-1");
+            this.$root.$emit("bv::show::modal","modal-2");
         },
         async borrar(item){
-            await this.axios.post('/usr/borrar',item);
+            await this.axios.post('/convocatoria/borrar',item);
             this.cargar();
         },
         nuevo(){
             this.accion=0;
-            this.$root.$emit("bv::show::modal","modal-1");
+            this.$root.$emit("bv::show::modal","modal-2");
         },
         cerrar(){
-            this.$root.$emit('bv::hide::modal','modal-1');
+            this.$root.$emit('bv::hide::modal','modal-2');
         },
         async guardar(){
             if(this.accion==0)
-            await this.axios.post('/usr/agregar', this.form);
+            await this.axios.post('/convocatoria/agregar', this.form);
             else
-            await this.axios.post('/usr/modificar', this.form);
-            this.$root.$emit('bv::hide::modal','modal-1');
+            await this.axios.post('/convocatoria/modificar', this.form);
+            this.$root.$emit('bv::hide::modal','modal-2');
             this.cargar();
         },
         async cargar(){
-            await this.axios.get('/usr/listar')
+            await this.axios.get('/convocatoria/listar')
             .then(r =>{this.usuarios=r.data.data;})
         }
     },

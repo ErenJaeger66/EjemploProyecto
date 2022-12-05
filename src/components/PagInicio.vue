@@ -40,11 +40,11 @@ export default {
         }
     },
     methods: {
-        verificar() {
+        async verificar() {
             this.axios.post('/usr/login', this.form)
                 .then(r => {
-                    this.axios.defaults.headers.common.authorization = r.data.token;
-                    localStorage.setItem('token', r.data.token);
+                    this.axios.defaults.headers.common.authorization = "Bearer." + r.data.token;
+                    localStorage.setItem('token', "Bearer." + r.data.token);
                     this.$store.commit('setIdusr', r.data.userdata.id);
                     this.$store.commit('setUsuario', r.data.userdata.usuario);
                     this.$store.commit('setTipo', r.data.userdata.tipo);

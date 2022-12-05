@@ -7,6 +7,7 @@ import ListHabilitados from '@/components/ListHabilitados.vue'
 import ListConvocatorias from '@/components/ListConvocatorias.vue'
 import BienvenidoUsuario from '@/components/BienvenidoUsuario.vue'
 import GestionUsuario from '@/components/GestionUsuario.vue'
+import GestionConvocatoria from '@/components/GestionConvocatoria.vue'
 
 Vue.use(VueRouter)
 
@@ -50,6 +51,11 @@ const routes = [
     path: '/usr/gestion',
     name: 'gestionusuario',
     component: GestionUsuario
+  },
+  {
+    path: '/conv/gestion',
+    name: 'gestionconvocatoria',
+    component: GestionConvocatoria
   }
 ]
 
